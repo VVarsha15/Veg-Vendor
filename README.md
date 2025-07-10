@@ -21,45 +21,6 @@ VeggieCart is a Django-based web application that allows users to browse and pur
 
 ---
 
-## Project Structure
-
-veggiecart/
-│
-├── app/
-│ ├── migrations/
-│ ├── templates/
-│ │ ├── login.html
-│ │ ├── signup.html
-│ │ ├── dashboard.html
-│ │ ├── vegetables.html
-│ │ ├── cart.html
-│ │ ├── order_history.html
-│ │ └── admin_dashboard.html
-│ ├── models.py
-│ ├── views.py
-│ ├── urls.py
-│ └── backends.py
-│
-├── veggiecart/
-│ ├── settings.py
-│ ├── urls.py
-│ └── wsgi.py
-│
-├── vegetable_static/
-│ ├── tomato.jpeg
-│ ├── potato.jpeg
-│ ├── carrot.jpg
-│ ├── onion.jpeg
-│ ├── cucumber.jpg
-│ └── brinjal.jpg
-│
-├── db.sqlite3
-├── manage.py
-└── .gitignore
-
-
----
-
 ## Prerequisites
 
 Make sure the following are installed:
