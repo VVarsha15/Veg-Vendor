@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="text-center">
+    <h1 class="mb-4">Welcome to VeggieCart 🥦</h1>
+    <p class="lead">Fresh vegetables delivered to your door.</p>
+    <a href="{% url 'signup' %}" class="btn btn-success me-2">Sign Up</a>
+    <a href="{% url 'login' %}" class="btn btn-outline-success">Login</a>
+</div>
+{% endblock %}

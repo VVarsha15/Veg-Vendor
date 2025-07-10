@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">Shop Vegetables 🛒</h2>
+     <!-- ✅ Success Messages -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <div class="row">
+        {% for veg in vegetables %}
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100">
+                {% if veg.image_filename %}
+                    <img src="{% static veg.image_filename %}" class="card-img-top" style="height: 200px; object-fit: cover;" alt="{{ veg.name }}">
+                {% else %}
+                    <img src="https://via.placeholder.com/300x200?text=No+Image" class="card-img-top" alt="No image">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ veg.name }}</h5>
+                    <p class="card-text">Price: ₹{{ veg.price_per_kg }} per kg</p>
+                    <p class="card-text">In Stock: {{ veg.quantity_available }} kg</p>
+                    <form method="POST" action="{% url 'add_to_cart' veg.id %}">
+                        {% csrf_token %}
+                        <div class="input-group">
+                            <input type="number" name="quantity" min="1" max="{{ veg.quantity_available }}" class="form-control" placeholder="Kgs" required>
+                            <button type="submit" class="btn btn-success">Add to Cart</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

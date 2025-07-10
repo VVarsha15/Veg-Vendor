@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Admin Dashboard 🛠️</h2>
+
+    <!-- Orders Section -->
+    <h4>🧾 Incoming Orders</h4>
+    {% if orders %}
+    <div class="table-responsive mb-5">
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>Order ID</th>
+                    <th>User</th>
+                    <th>Time</th>
+                    <th>Items</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order.id }}</td>
+                    <td>{{ order.user.name }} ({{ order.user.phone }})</td>
+                    <td>{{ order.ordered_at }}</td>
+                    <td>
+                        <ul>
+                            {% for item in order.orderitem_set.all %}
+                            <li>{{ item.vegetable.name }} - {{ item.quantity }} kg (Rs {{ item.total_price }})</li>
+                            {% endfor %}
+                        </ul>
+                        <form method="POST" action="{% url 'delete_order' order.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm mt-2">Mark as Done</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p class="text-muted">No orders yet.</p>
+    {% endif %}
+
+    <!-- Stock Management Section -->
+    <h4 class="mt-5">📦 Manage Stock</h4>
+    <table class="table table-bordered mt-3">
+        <thead class="table-secondary">
+            <tr>
+                <th>Vegetable</th>
+                <th>Current Stock (kg)</th>
+                <th>Add Quantity</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for veg in vegetables %}
+            <tr>
+                <td>{{ veg.name }}</td>
+                <td>{{ veg.quantity_available }}</td>
+                <td>
+                    <form method="POST" action="{% url 'update_stock' veg.id %}" class="d-flex">
+                        {% csrf_token %}
+                        <input type="number" name="new_quantity" min="1" class="form-control me-2" required>
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </form>
+                </td>
+                <td></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

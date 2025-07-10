@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block content %}
+<h3>Order Placed Successfully 🎉</h3>
+<p>Your order was placed at: {{ order.ordered_at }}</p>
+<a href="{% url 'vegetables' %}" class="btn btn-success mt-3">Shop More</a>
+{% endblock %}
